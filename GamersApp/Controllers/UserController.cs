@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace GamersApp.Controllers
 {
@@ -14,22 +13,20 @@ namespace GamersApp.Controllers
             _context = context;
         }
 
-
         [HttpPost("register")]
- 
         public async Task<ActionResult<User>> AddUser(User newUser)
         {
-            var dbUser = _context.Users.Where(u => u.Email == newUser.Email).FirstOrDefault();
+            var dbUser = await _context.Users.Where(u => u.Email == newUser.Email).FirstOrDefaultAsync();
 
             if (dbUser != null)
             {
-                return BadRequest("User already exist");
+                return BadRequest("User already exists");
             }
 
-            string changingPass = newUser.Password;
-            newUser.Password = BCrypt.Net.BCrypt.HashPassword(changingPass);
+            newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
             await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
+
             return Ok(newUser);
         }
     }

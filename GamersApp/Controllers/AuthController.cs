@@ -1,12 +1,10 @@
 ﻿using GamersApp.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
 namespace GamersApp.Controllers
 {
     [Route("api/auth")]
@@ -14,45 +12,43 @@ namespace GamersApp.Controllers
     public class AuthController : ControllerBase
     {
         private readonly DataContext _context;
+
         public AuthController(DataContext context)
         {
             _context = context;
         }
+
         [HttpPost, Route("login")]
-        public IActionResult Login([FromBody] LoginModel loginUser)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginModel loginUser)
         {
-            try
+            if (loginUser == null)
             {
-                var logedInUser = SearchUser(loginUser);
-
-                if (!(BCrypt.Net.BCrypt.Verify(loginUser.Password, logedInUser.Password)))
-                {
-                    PasswordFailedAttemp(logedInUser);
-                    return BadRequest("Wrong password");
-                }
-                else if (logedInUser.FailedPasswordAttempts >= 3)
-                {
-                    return BadRequest("you are banned");
-                }
-                else
-                {
-                    var tokenString = LogedInUserInfo(logedInUser);
-                    return Ok(new { Token = tokenString });
-                }
+                return BadRequest();
             }
-            catch
+
+            var user = await _context.Users.Where(x => x.Email == loginUser.Email).FirstOrDefaultAsync();
+
+            if (user == null)
             {
-                return BadRequest("User not found");
+                return BadRequest("Wrong password");
+            }
+
+            if (!(BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password)))
+            {
+                PasswordFailedAttemp(user);
+                return BadRequest("Wrong password");
+            }
+            else if (user.FailedPasswordAttempts >= 3)
+            {
+                return BadRequest("you are banned");
+            }
+            else
+            {
+                var tokenString = LogedInUserInfo(user);
+                return Ok(new { Token = tokenString });
             }
         }
-        private User SearchUser(LoginModel LoginUser)
-        {
-            var primaryKey = from User in _context.Users where (User.Email == LoginUser.UserName) select User.Id;
-            int id = primaryKey.First();
-            var logedInUser = _context.Users.Find(id);
 
-            return logedInUser;
-        }
         private string LogedInUserInfo(User logedInUser)
         {
             ResetFailedAttempts(logedInUser);
@@ -75,11 +71,13 @@ namespace GamersApp.Controllers
 
             return tokensString;
         }
+
         private void PasswordFailedAttemp(User logedInUser)
         {
             logedInUser.FailedPasswordAttempts++;
             _context.SaveChangesAsync();
         }
+
         private void ResetFailedAttempts(User logedInUser)
         {
             logedInUser.FailedPasswordAttempts = 0;
