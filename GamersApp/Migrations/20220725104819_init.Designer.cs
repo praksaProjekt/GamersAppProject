@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamersApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220722093203_first migration")]
-    partial class firstmigration
+    [Migration("20220725104819_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,14 +38,6 @@ namespace GamersApp.Migrations
 
                     b.Property<int>("FailedPasswordAttempts")
                         .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nickname")
                         .IsRequired()
