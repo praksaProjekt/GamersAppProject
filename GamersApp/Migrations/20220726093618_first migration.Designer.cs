@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamersApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220725104819_init")]
-    partial class init
+    [Migration("20220726093618_first migration")]
+    partial class firstmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,22 @@ namespace GamersApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("GamersApp.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("GameName")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Games");
+                });
 
             modelBuilder.Entity("GamersApp.User", b =>
                 {
@@ -37,6 +53,9 @@ namespace GamersApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FailedPasswordAttempts")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GameId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nickname")
@@ -58,7 +77,39 @@ namespace GamersApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GameId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("GamersApp.UserGame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserGames");
+                });
+
+            modelBuilder.Entity("GamersApp.User", b =>
+                {
+                    b.HasOne("GamersApp.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
                 });
 #pragma warning restore 612, 618
         }
