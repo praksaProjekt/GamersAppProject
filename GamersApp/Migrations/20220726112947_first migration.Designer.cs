@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamersApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220726093618_first migration")]
+    [Migration("20220726112947_first migration")]
     partial class firstmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,9 +55,6 @@ namespace GamersApp.Migrations
                     b.Property<int>("FailedPasswordAttempts")
                         .HasColumnType("int");
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nickname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,8 +73,6 @@ namespace GamersApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
 
                     b.ToTable("Users");
                 });
@@ -99,17 +94,6 @@ namespace GamersApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserGames");
-                });
-
-            modelBuilder.Entity("GamersApp.User", b =>
-                {
-                    b.HasOne("GamersApp.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
                 });
 #pragma warning restore 612, 618
         }

@@ -53,9 +53,6 @@ namespace GamersApp.Migrations
                     b.Property<int>("FailedPasswordAttempts")
                         .HasColumnType("int");
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nickname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -74,8 +71,6 @@ namespace GamersApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
 
                     b.ToTable("Users");
                 });
@@ -97,17 +92,6 @@ namespace GamersApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserGames");
-                });
-
-            modelBuilder.Entity("GamersApp.User", b =>
-                {
-                    b.HasOne("GamersApp.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
                 });
 #pragma warning restore 612, 618
         }

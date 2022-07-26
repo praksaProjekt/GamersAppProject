@@ -17,7 +17,6 @@ namespace GamersApp
         public string? PasswordResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
         public int FailedPasswordAttempts { get; set; } = 0;
-        public Game Game { get; set; }
     }
     public enum Role
     {
