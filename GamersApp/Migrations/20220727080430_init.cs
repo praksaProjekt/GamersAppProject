@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GamersApp.Migrations
 {
-    public partial class firstmigration : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,30 @@ namespace GamersApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Games", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Profiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Twitter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Instagram = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Facebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EpicGames = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Steam = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    File = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Profiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,6 +84,9 @@ namespace GamersApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Games");
+
+            migrationBuilder.DropTable(
+                name: "Profiles");
 
             migrationBuilder.DropTable(
                 name: "UserGames");

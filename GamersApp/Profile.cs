@@ -15,5 +15,6 @@
         public string? EpicGames { get; set; }
         public string? Steam { get; set; }
         public string? File { get; set; }
+        public string? Video { get; set; }   
     }
 }
