@@ -9,5 +9,6 @@ namespace GamersApp
         public int UserId { get; set; }
         [ForeignKey("Game")]
         public int GameId { get; set; }
+        public string? GamerTag { get; set; }
     }
 }
