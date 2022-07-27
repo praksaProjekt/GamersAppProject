@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace GamersApp.Controllers
 {
@@ -13,6 +12,7 @@ namespace GamersApp.Controllers
         {
             _context = context;
         }
+
         [HttpPost]
         public async Task<ActionResult<List<Game>>> AddGame(Game game)
         {
@@ -21,12 +21,16 @@ namespace GamersApp.Controllers
 
             return Ok(await _context.Games.ToListAsync());
         }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Game>>> Delete(int id)
         {
             var dbGame = await _context.Games.FindAsync(id);
+
             if (dbGame == null)
+            {
                 return BadRequest("Game not found.");
+            }
 
             _context.Games.Remove(dbGame);
             await _context.SaveChangesAsync();

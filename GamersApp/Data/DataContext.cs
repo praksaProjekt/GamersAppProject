@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace GamersApp.Data
+﻿namespace GamersApp.Data
 {
     public class DataContext : DbContext
     {
@@ -8,8 +6,7 @@ namespace GamersApp.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Game> Games { get; set; }
-
         public DbSet<UserGame> UserGames { get; set; }
-
+        public DbSet<Profile> Profiles { get; set; }
     }
 }
