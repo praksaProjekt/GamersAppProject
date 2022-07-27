@@ -54,8 +54,8 @@ namespace GamersApp.Controllers
             ResetFailedAttempts(logedInUser);
             var claims = new[]
             {
-                        new Claim(type: "id",value: logedInUser.Id.ToString()),
-                        new Claim(type: "role",value:logedInUser.role.ToString()),
+                        new Claim(type: "id", value: logedInUser.Id.ToString()),
+                        new Claim(type: "role", value:logedInUser.role.ToString()),
                     };
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication@345"));
             var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

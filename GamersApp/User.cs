@@ -25,3 +25,22 @@ namespace GamersApp
     }
     
 }
+
+/*
+name, lastname
+title
+city adress country,
+mobile
+
+list of categories
+
+twitter
+insta
+facebook
+steam
+epic
+
+url img
+
+list of games
+ */
