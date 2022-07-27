@@ -26,7 +26,11 @@ namespace GamersApp.Controllers
             newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
             await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
-
+            Profile profile = new()
+            {
+                Id = newUser.Id
+            };
+            _context.Profiles.Add(profile);
             return Ok(newUser);
         }
     }
