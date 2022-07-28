@@ -12,10 +12,12 @@ namespace GamersApp.Services.AuthServices
     public class AuthServices : IAuthServices
     {
         private readonly DataContext context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public AuthServices(DataContext context)
+        public AuthServices(DataContext context, IWebHostEnvironment webHostEnvironment)
         {
             this.context = context;
+            this.webHostEnvironment = webHostEnvironment;   
         }
 
         public async Task<string> Login(LoginModel loginUser)
@@ -57,7 +59,8 @@ namespace GamersApp.Services.AuthServices
 
             Profile profile = new()
             {
-                UserId = registerUser.Id
+                UserId = registerUser.Id,
+                ProfilePictureURI = webHostEnvironment.WebRootPath + @"\content\baseImage.jpg"
             };
 
             await context.Profiles.AddAsync(profile);
