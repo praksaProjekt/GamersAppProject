@@ -5,7 +5,7 @@ using GamersApp.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors();
+builder.Services.AddCorsExtension();
 builder.Services.AddJwtAuthenticationExtension();
 builder.Services.AddControllers();
 builder.Services.AddServiceInjectionExtension();
