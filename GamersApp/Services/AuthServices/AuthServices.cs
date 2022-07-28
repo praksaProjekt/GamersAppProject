@@ -60,7 +60,7 @@ namespace GamersApp.Services.AuthServices
                 UserId = registerUser.Id
             };
 
-            context.Profiles.Add(profile);
+            await context.Profiles.AddAsync(profile);
             await context.SaveChangesAsync();
         }
 
