@@ -67,7 +67,8 @@ namespace GamersApp.Controllers
             {
                 Id = newUser.Id
             };
-            _context.Profiles.Add(profile);
+            await _context.Profiles.AddAsync(profile);
+            await _context.SaveChangesAsync();
             return Ok(newUser);
         }
 
