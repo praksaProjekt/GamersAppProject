@@ -39,7 +39,8 @@ namespace GamersApp.Migrations
                     Facebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EpicGames = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Steam = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    File = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    File = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Video = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,7 +54,8 @@ namespace GamersApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: false)
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    GamerTag = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

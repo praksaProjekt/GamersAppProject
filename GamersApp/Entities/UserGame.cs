@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GamersApp
+namespace GamersApp.Entities
 {
     public class UserGame
     {

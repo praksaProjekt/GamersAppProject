@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GamersApp.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GamersApp.Controllers
 {
