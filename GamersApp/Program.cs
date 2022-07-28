@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCorsExtension();
 builder.Services.AddJwtAuthenticationExtension();
-builder.Services.AddControllers();
 builder.Services.AddServiceInjectionExtension();
+builder.Services.AddControllers();
 builder.Services.AddDbContextExtension(builder);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

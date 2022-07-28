@@ -1,4 +1,6 @@
-﻿namespace GamersApp.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GamersApp.Entities
 {
     public class Profile
     {
@@ -15,10 +17,7 @@
         public string? Facebook { get; set; }
         public string? EpicGames { get; set; }
         public string? Steam { get; set; }
-        public string? File { get; set; }
+        public string? ProfilePictureURI { get; set; }
         public string? Video { get; set; }
-
-
-
     }
 }
