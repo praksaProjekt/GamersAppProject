@@ -1,4 +1,5 @@
-﻿using GamersApp.Models;
+﻿using GamersApp.Entities;
+using GamersApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -47,6 +48,27 @@ namespace GamersApp.Controllers
                 var tokenString = LogedInUserInfo(user);
                 return Ok(new { Token = tokenString });
             }
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult<User>> AddUser(User newUser)
+        {
+            var dbUser = await _context.Users.Where(u => u.Email == newUser.Email).FirstOrDefaultAsync();
+
+            if (dbUser != null)
+            {
+                return BadRequest("User already exists");
+            }
+
+            newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+            await _context.Users.AddAsync(newUser);
+            await _context.SaveChangesAsync();
+            Profile profile = new()
+            {
+                Id = newUser.Id
+            };
+            _context.Profiles.Add(profile);
+            return Ok(newUser);
         }
 
         private string LogedInUserInfo(User logedInUser)

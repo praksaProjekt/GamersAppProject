@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace GamersApp
+namespace GamersApp.Entities
 {
     public class User
     {
@@ -23,24 +23,5 @@ namespace GamersApp
         user,
         admin
     }
-    
+
 }
-
-/*
-name, lastname
-title
-city adress country,
-mobile
-
-list of categories
-
-twitter
-insta
-facebook
-steam
-epic
-
-url img
-
-list of games
- */

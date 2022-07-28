@@ -1,4 +1,6 @@
-﻿namespace GamersApp.Data
+﻿using GamersApp.Entities;
+
+namespace GamersApp.Data
 {
     public class DataContext : DbContext
     {
