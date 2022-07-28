@@ -22,7 +22,7 @@ namespace GamersApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("GamersApp.Game", b =>
+            modelBuilder.Entity("GamersApp.Entities.Game", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace GamersApp.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("GamersApp.Profile", b =>
+            modelBuilder.Entity("GamersApp.Entities.Profile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,6 +83,9 @@ namespace GamersApp.Migrations
                     b.Property<string>("Twitter")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Video")
                         .HasColumnType("nvarchar(max)");
 
@@ -91,7 +94,7 @@ namespace GamersApp.Migrations
                     b.ToTable("Profiles");
                 });
 
-            modelBuilder.Entity("GamersApp.User", b =>
+            modelBuilder.Entity("GamersApp.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +131,7 @@ namespace GamersApp.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("GamersApp.UserGame", b =>
+            modelBuilder.Entity("GamersApp.Entities.UserGame", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
