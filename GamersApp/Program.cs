@@ -1,10 +1,11 @@
 global using GamersApp.Data;
 global using Microsoft.EntityFrameworkCore;
 using GamersApp.ServiceInjection;
+using GamersApp.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors();
+builder.Services.AddCorsExtension();
 builder.Services.AddJwtAuthenticationExtension();
 builder.Services.AddServiceInjectionExtension();
 builder.Services.AddControllers();
@@ -20,6 +21,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

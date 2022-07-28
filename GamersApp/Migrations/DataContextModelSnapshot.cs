@@ -83,6 +83,9 @@ namespace GamersApp.Migrations
                     b.Property<string>("Twitter")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Video")
                         .HasColumnType("nvarchar(max)");
 
