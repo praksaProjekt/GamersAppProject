@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace GamersApp.Entities
+﻿namespace GamersApp.Entities
 {
     public class Game
     {

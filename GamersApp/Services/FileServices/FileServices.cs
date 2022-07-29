@@ -1,6 +1,6 @@
 ﻿using GamersApp.DTO;
-namespace GamersApp.Services.FileServices
 
+namespace GamersApp.Services.FileServices
 {
     public class FileServices:IFileServices
     {
@@ -46,8 +46,6 @@ namespace GamersApp.Services.FileServices
             var tokenGenerated = (DateTime.Now.Ticks / 10000).ToString() + RandomString(6);
             FileInfo fi = new FileInfo(file.Filename);
             var filename = tokenGenerated + fi.Extension;
-            return Path.Combine(webHostEnvironment.WebRootPath + @"\content", filename);
-            //string path = Path.Combine(@"\content", filename);
             return filename;
         }
 

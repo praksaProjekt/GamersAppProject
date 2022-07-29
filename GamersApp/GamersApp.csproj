@@ -27,7 +27,6 @@
 
 
   <ItemGroup>
-    <Folder Include="DAL\ModelBuilder\" />
     <Folder Include="AutoMapper\" />
     <Folder Include="Services\ProfileServices\" />
     <Folder Include="wwwroot\content\" />
