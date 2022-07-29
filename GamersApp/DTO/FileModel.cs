@@ -18,7 +18,8 @@ namespace GamersApp.DTO
     public enum fileType
     {
         profilePicture = 0,
-        video,
-        photo
+        profileVideo,
+        postPhoto,
+        postVideo
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GamersApp.Services.AuthServices;
 using GamersApp.Services.FileServices;
+using GamersApp.Services.PostServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -62,6 +63,7 @@ namespace GamersApp.ServiceInjection
         {
             services.AddTransient<IAuthServices, AuthServices>();
             services.AddTransient<IFileServices,FileServices>();
+            services.AddTransient<IPostServices, PostServices>();
             return services;
         }
     }

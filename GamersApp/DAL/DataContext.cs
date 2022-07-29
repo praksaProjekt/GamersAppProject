@@ -8,7 +8,28 @@ namespace GamersApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+            modelBuilder.Entity<Friend>()
+                 .HasOne(x => x.User1)
+                 .WithMany(x => x.Friends1) // <--
+                 .HasForeignKey(pt => pt.UserID1)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Friend>()
+                .HasOne(pt => pt.User2)
+                .WithMany(t => t.Friends2)
+                .HasForeignKey(pt => pt.UserID2);
+
+            modelBuilder.Entity<Post>()
+                .HasOne(x => x.User)
+                .WithMany(User => User.Posts)
+                .HasForeignKey(x => x.UserId);
+
+            modelBuilder.Entity<PostLike>()
+                .HasOne(x => x.Post)
+                .WithMany(p => p.Likes).
+                HasForeignKey(x => x.PostId);
+
+
         }
 
         public DbSet<User> Users { get; set; }
@@ -17,6 +38,10 @@ namespace GamersApp.Data
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<PostLike> PostLikes { get; set; }
+
     }
 
  

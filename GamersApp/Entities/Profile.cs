@@ -19,6 +19,6 @@ namespace GamersApp.Entities
         public string? EpicGames { get; set; }
         public string? Steam { get; set; }
         public string? ProfilePictureURI { get; set; }
-        public string? Video { get; set; }
+        public string? ProfileVideoURI { get; set; }
     }
 }
