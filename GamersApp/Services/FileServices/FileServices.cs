@@ -32,6 +32,12 @@ namespace GamersApp.Services.FileServices
                         context.Profiles.Update(userProfile);
                         await context.SaveChangesAsync();
                         break;
+                    case fileType.profileVideo:
+                        userProfile.ProfileVideoURI = imagePath;
+                        context.Profiles.Update(userProfile);
+                        await context.SaveChangesAsync();
+                        break;
+                    
                 }
                 return imagePath;
             }

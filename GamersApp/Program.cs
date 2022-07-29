@@ -2,13 +2,16 @@ global using GamersApp.Data;
 global using Microsoft.EntityFrameworkCore;
 using GamersApp.ServiceInjection;
 using GamersApp.Middleware;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCorsExtension();
 builder.Services.AddJwtAuthenticationExtension();
 builder.Services.AddServiceInjectionExtension();
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddDbContextExtension(builder);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
