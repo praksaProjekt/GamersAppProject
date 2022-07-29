@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GamersApp.Entities
+﻿namespace GamersApp.Entities
 {
     public class Profile
     {
@@ -11,7 +9,6 @@ namespace GamersApp.Entities
         public string? Title { get; set; }
         public string? Email { get; set; }
         public string? Mobile { get; set; }
-        public string? Address { get; set; }
         public string? Country { get; set; }
         public string? Twitter { get; set; }
         public string? Instagram { get; set; }

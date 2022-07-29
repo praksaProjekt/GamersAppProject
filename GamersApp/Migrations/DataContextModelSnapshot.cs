@@ -22,6 +22,52 @@ namespace GamersApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("GamersApp.Entities.Friend", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("UserID1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID2")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserID1");
+
+                    b.HasIndex("UserID2");
+
+                    b.ToTable("Friends");
+                });
+
+            modelBuilder.Entity("GamersApp.Entities.FriendRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Followed")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Follower")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Followed");
+
+                    b.HasIndex("Follower");
+
+                    b.ToTable("FriendRequests");
+                });
+
             modelBuilder.Entity("GamersApp.Entities.Game", b =>
                 {
                     b.Property<int>("Id")
@@ -46,9 +92,6 @@ namespace GamersApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
@@ -90,6 +133,8 @@ namespace GamersApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Profiles");
                 });
@@ -139,7 +184,7 @@ namespace GamersApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("GameId")
+                    b.Property<int?>("GameId")
                         .HasColumnType("int");
 
                     b.Property<string>("GamerTag")
@@ -150,7 +195,88 @@ namespace GamersApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("UserGames");
+                });
+
+            modelBuilder.Entity("GamersApp.Entities.Friend", b =>
+                {
+                    b.HasOne("GamersApp.Entities.User", "User1")
+                        .WithMany("Friends1")
+                        .HasForeignKey("UserID1")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GamersApp.Entities.User", "User2")
+                        .WithMany("Friends2")
+                        .HasForeignKey("UserID2")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User1");
+
+                    b.Navigation("User2");
+                });
+
+            modelBuilder.Entity("GamersApp.Entities.FriendRequest", b =>
+                {
+                    b.HasOne("GamersApp.Entities.User", "FollowedUser")
+                        .WithMany("FriendRequestsThem")
+                        .HasForeignKey("Followed")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GamersApp.Entities.User", "FollowerUser")
+                        .WithMany("FriendRequestsMe")
+                        .HasForeignKey("Follower")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FollowedUser");
+
+                    b.Navigation("FollowerUser");
+                });
+
+            modelBuilder.Entity("GamersApp.Entities.Profile", b =>
+                {
+                    b.HasOne("GamersApp.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GamersApp.Entities.UserGame", b =>
+                {
+                    b.HasOne("GamersApp.Entities.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId");
+
+                    b.HasOne("GamersApp.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GamersApp.Entities.User", b =>
+                {
+                    b.Navigation("FriendRequestsMe");
+
+                    b.Navigation("FriendRequestsThem");
+
+                    b.Navigation("Friends1");
+
+                    b.Navigation("Friends2");
                 });
 #pragma warning restore 612, 618
         }

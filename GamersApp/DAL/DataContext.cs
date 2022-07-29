@@ -1,4 +1,5 @@
-﻿using GamersApp.Entities;
+﻿using GamersApp.DAL.ModelBuilder;
+using GamersApp.Entities;
 
 namespace GamersApp.Data
 {
@@ -17,6 +18,12 @@ namespace GamersApp.Data
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            new FriendRequestBuilder().Configure(modelBuilder.Entity<FriendRequest>());
+            new FriendBuilder().Configure(modelBuilder.Entity<Friend>());
+        }
     }
 
  
