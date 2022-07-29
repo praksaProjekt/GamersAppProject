@@ -25,4 +25,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="DAL\ModelBuilder\" />
+    <Folder Include="AutoMapper\" />
+    <Folder Include="Services\ProfileServices\" />
+    <Folder Include="wwwroot\content\" />
+  </ItemGroup>
+
 </Project>

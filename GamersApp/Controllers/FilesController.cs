@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-using System.Threading.Tasks;
-
-using System;
+﻿using GamersApp.DTO;
 using GamersApp.Services.FileServices;
-using GamersApp.DTO;
+using Microsoft.AspNetCore.Mvc;
 
-namespace MyAppBackend.Controllers
+namespace GamersApp.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
-    public class FilesController : ControllerBase
+    public class FilesController : BaseController
     {
         private readonly IFileServices fileService;
 
@@ -27,6 +22,7 @@ namespace MyAppBackend.Controllers
             {
                 return Ok();
             }
+
             return BadRequest();
         }
     }

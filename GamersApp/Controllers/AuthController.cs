@@ -7,7 +7,7 @@ namespace GamersApp.Controllers
 {
     [Route("api/auth")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
         private readonly IAuthServices authServices;
 

@@ -5,38 +5,38 @@ namespace GamersApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GamesController : ControllerBase
+    public class GamesController : BaseController
     {
-        private readonly DataContext _context;
+        private readonly DataContext context;
 
         public GamesController(DataContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         [HttpPost]
         public async Task<ActionResult<List<Game>>> AddGame(Game game)
         {
-            _context.Games.Add(game);
-            await _context.SaveChangesAsync();
+            context.Games.Add(game);
+            await context.SaveChangesAsync();
 
-            return Ok(await _context.Games.ToListAsync());
+            return Ok(await context.Games.ToListAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Game>>> Delete(int id)
         {
-            var dbGame = await _context.Games.FindAsync(id);
+            var dbGame = await context.Games.FindAsync(id);
 
             if (dbGame == null)
             {
                 return BadRequest("Game not found.");
             }
 
-            _context.Games.Remove(dbGame);
-            await _context.SaveChangesAsync();
+            context.Games.Remove(dbGame);
+            await context.SaveChangesAsync();
 
-            return Ok(await _context.Games.ToListAsync());
+            return Ok(await context.Games.ToListAsync());
         }
     }
 }

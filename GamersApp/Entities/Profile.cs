@@ -6,6 +6,7 @@ namespace GamersApp.Entities
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public virtual User? User { get; set; }
         public string? FullName { get; set; }
         public string? Title { get; set; }
         public string? Email { get; set; }

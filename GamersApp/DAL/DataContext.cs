@@ -10,5 +10,7 @@ namespace GamersApp.Data
         public DbSet<Game> Games { get; set; }
         public DbSet<UserGame> UserGames { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Friend> Friends { get; set; }
+        public DbSet<FriendRequest> FriendRequests { get; set; }
     }
 }
