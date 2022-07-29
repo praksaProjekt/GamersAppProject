@@ -46,6 +46,4 @@ namespace GamersApp.Data
 
         public DbSet<PostLike> PostLikes { get; set; }
     }
-
- 
 }
