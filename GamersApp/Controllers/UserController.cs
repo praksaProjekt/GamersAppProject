@@ -4,13 +4,13 @@ namespace GamersApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
-        private readonly DataContext _context;
+        private readonly DataContext context;
 
         public UserController(DataContext context)
         {
-            _context = context;
+            this.context = context;
         }
     }
 }

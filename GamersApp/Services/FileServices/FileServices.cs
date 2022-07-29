@@ -1,12 +1,9 @@
 ﻿using GamersApp.DTO;
-using GamersApp.Entities;
-using Microsoft.AspNetCore.Mvc;
 namespace GamersApp.Services.FileServices
 
 {
     public class FileServices:IFileServices
     {
-
         private readonly DataContext context;
         private readonly IWebHostEnvironment webHostEnvironment;
 
@@ -41,7 +38,6 @@ namespace GamersApp.Services.FileServices
             {
                 return null;
             }
-            
         }
          
         public string generateToken(FileModel file)
@@ -49,12 +45,8 @@ namespace GamersApp.Services.FileServices
             var tokenGenerated = (DateTime.Now.Ticks / 10000).ToString() + RandomString(6);
             FileInfo fi = new FileInfo(file.Filename);
             var filename = tokenGenerated + fi.Extension;
-            string path = Path.Combine(webHostEnvironment.WebRootPath + @"\content", filename);
-
-            return path;
-
+            return Path.Combine(webHostEnvironment.WebRootPath + @"\content", filename);
         }
-
 
         public static string RandomString(int length)
         {
@@ -63,9 +55,5 @@ namespace GamersApp.Services.FileServices
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
-
-
-
-
     }
 }

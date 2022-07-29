@@ -37,8 +37,7 @@ namespace GamersApp.Services.AuthServices
                 throw new AppException("Banned", 403);
             }
 
-            var tokenString = GetJwt(user);
-            return tokenString;
+            return GetJwt(user);
         }
 
         public async Task Register(User registerUser)

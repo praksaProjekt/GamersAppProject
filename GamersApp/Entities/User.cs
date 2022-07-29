@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace GamersApp.Entities
@@ -17,12 +18,15 @@ namespace GamersApp.Entities
         public string? PasswordResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
         public int FailedPasswordAttempts { get; set; } = 0;
+        public virtual ICollection<FriendRequest> FriendRequestsMe {get; set;}
+        public virtual ICollection<FriendRequest> FriendRequestsThem { get; set; }
+
 
     }
+
     public enum Role
     {
         user,
         admin
     }
-
 }
