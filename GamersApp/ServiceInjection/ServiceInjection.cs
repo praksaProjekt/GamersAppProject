@@ -1,5 +1,8 @@
 ﻿using GamersApp.Services.AuthServices;
 using GamersApp.Services.FileServices;
+using GamersApp.Services.FriendRequestServices;
+using GamersApp.Services.FriendServices;
+using GamersApp.Services.ProfileServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -62,6 +65,10 @@ namespace GamersApp.ServiceInjection
         {
             services.AddTransient<IAuthServices, AuthServices>();
             services.AddTransient<IFileServices,FileServices>();
+            services.AddTransient<IProfileServices, ProfileServices>();
+            services.AddTransient<IFriendServices, FriendServices>();
+            services.AddTransient<IFriendRequestServices, FriendRequestServices>();
+
             return services;
         }
     }

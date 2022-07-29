@@ -1,4 +1,5 @@
 ﻿using GamersApp.Entities;
+using GamersApp.Services.ProfileServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamersApp.Controllers
@@ -7,17 +8,17 @@ namespace GamersApp.Controllers
     [ApiController]
     public class ProfileController : BaseController
     {
-        private readonly DataContext context;
+        private readonly IProfileServices profileServices;
 
-        public ProfileController(DataContext context)
+        public ProfileController(IProfileServices profileServices)
         {
-            this.context = context;
+            this.profileServices = profileServices ?? throw new ArgumentNullException(nameof(profileServices));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var userProfile = await context.Profiles.FindAsync(id);
+            var userProfile = await profileServices.Get(id);
 
             if (userProfile == null)
             {
@@ -30,8 +31,7 @@ namespace GamersApp.Controllers
         [HttpPut]
         public async Task<ActionResult> Put(Profile profile)
         {
-            context.Profiles.Update(profile);
-            await context.SaveChangesAsync();
+            await profileServices.Put(profile);
             return Ok();
         }
     }

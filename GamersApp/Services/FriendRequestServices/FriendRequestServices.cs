@@ -3,7 +3,7 @@ using GamersApp.Entities;
 
 namespace GamersApp.Services.FriendRequestServices
 {
-    public class FriendRequestServices
+    public class FriendRequestServices : IFriendRequestServices
     {
         private readonly DataContext context;
 
