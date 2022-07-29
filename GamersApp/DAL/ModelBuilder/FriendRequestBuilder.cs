@@ -8,17 +8,15 @@ namespace GamersApp.DAL.ModelBuilder
         public void Configure(EntityTypeBuilder<FriendRequest> modelBuilder)
         {
             modelBuilder
-                   .HasOne(x => x.FollowerUser)
-                   .WithMany(x => x.FriendRequestsMe)
-                   .HasForeignKey(x => x.Follower)
-                   .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(x => x.FollowerUser)
+                .WithMany(x => x.FriendRequestsMe)
+                .HasForeignKey(x => x.Follower)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder
-                    .HasOne(x => x.FollowedUser)
-                    .WithMany(x => x.FriendRequestsThem)
-                    .HasForeignKey(x => x.Followed);
-
-            //modelBuilder.HasIndex(p => new { p.Followed, p.Follower }).IsUnique();
+                .HasOne(x => x.FollowedUser)
+                .WithMany(x => x.FriendRequestsThem)
+                .HasForeignKey(x => x.Followed);
         }
     }
 }
