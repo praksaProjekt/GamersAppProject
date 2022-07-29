@@ -1,4 +1,5 @@
-﻿using GamersApp.Entities;
+﻿using GamersApp.DAL.ModelBuilder;
+using GamersApp.Entities;
 
 namespace GamersApp.Data
 {
@@ -28,6 +29,9 @@ namespace GamersApp.Data
                 .HasOne(x => x.Post)
                 .WithMany(p => p.Likes).
                 HasForeignKey(x => x.PostId);
+                
+            new FriendRequestBuilder().Configure(modelBuilder.Entity<FriendRequest>());
+            new FriendBuilder().Configure(modelBuilder.Entity<Friend>());
 
 
         }
@@ -41,7 +45,6 @@ namespace GamersApp.Data
         public DbSet<Post> Posts { get; set; }
 
         public DbSet<PostLike> PostLikes { get; set; }
-
     }
 
  

@@ -1,6 +1,6 @@
 ﻿using GamersApp.DTO;
-namespace GamersApp.Services.FileServices
 
+namespace GamersApp.Services.FileServices
 {
     public class FileServices:IFileServices
     {
