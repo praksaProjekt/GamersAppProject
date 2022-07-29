@@ -27,11 +27,12 @@ namespace GamersApp.Services.FileServices
                 }
                 var imagePath = generateToken(fileData);
                 var base64 = fileData.FileBase64.Substring(fileData.FileBase64.IndexOf(",") + 1);
-                await File.WriteAllBytesAsync(imagePath, Convert.FromBase64String(base64));
+                await File.WriteAllBytesAsync(webHostEnvironment.WebRootPath + @"\content\" + imagePath, Convert.FromBase64String(base64));
                 switch (fileData.FileType)
                 {
                     case fileType.profilePicture:
                         userProfile.ProfilePictureURI = imagePath;
+                        context.Profiles.Update(userProfile);
                         await context.SaveChangesAsync();
                         break;
                 }
@@ -49,9 +50,9 @@ namespace GamersApp.Services.FileServices
             var tokenGenerated = (DateTime.Now.Ticks / 10000).ToString() + RandomString(6);
             FileInfo fi = new FileInfo(file.Filename);
             var filename = tokenGenerated + fi.Extension;
-            string path = Path.Combine(webHostEnvironment.WebRootPath + @"\content", filename);
+            //string path = Path.Combine(@"\content", filename);
 
-            return path;
+            return filename;
 
         }
 

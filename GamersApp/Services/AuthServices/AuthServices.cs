@@ -60,7 +60,7 @@ namespace GamersApp.Services.AuthServices
             Profile profile = new()
             {
                 UserId = registerUser.Id,
-                ProfilePictureURI = webHostEnvironment.WebRootPath + @"\content\baseImage.jpg"
+                ProfilePictureURI = "baseImage.jpg"
             };
 
             await context.Profiles.AddAsync(profile);
