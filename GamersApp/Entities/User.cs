@@ -18,8 +18,8 @@ namespace GamersApp.Entities
         public string? PasswordResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
         public int FailedPasswordAttempts { get; set; } = 0;
-        public virtual ICollection<FriendRequest> FriendRequestsMe {get; set;}
-        public virtual ICollection<FriendRequest> FriendRequestsThem { get; set; }
+        public virtual ICollection<FriendRequest>? FriendRequestsMe {get; set;}
+        public virtual ICollection<FriendRequest>? FriendRequestsThem { get; set; }
 
 
     }
