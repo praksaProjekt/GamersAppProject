@@ -46,7 +46,7 @@ namespace GamersApp.Services.FileServices
                 return null;
             }
         }
-         
+
         public string generateToken(FileModel file)
         {
             var tokenGenerated = (DateTime.Now.Ticks / 10000).ToString() + RandomString(6);
