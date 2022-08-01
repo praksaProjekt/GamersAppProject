@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCorsExtension();
 builder.Services.AddJwtAuthenticationExtension();
 builder.Services.AddServiceInjectionExtension();
-//builder.Services.AddControllers();
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddDbContextExtension(builder);

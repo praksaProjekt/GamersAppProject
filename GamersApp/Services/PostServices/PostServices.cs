@@ -8,6 +8,7 @@ namespace GamersApp.Services.PostServices
     {
         private readonly DataContext context;
         private readonly IFileServices fileService;
+
         public PostServices(DataContext context, IFileServices fileService)
         {
             this.context = context;
@@ -16,57 +17,37 @@ namespace GamersApp.Services.PostServices
 
         public async Task<Post> AddPost(PostModel postData)
         {
-
             Post newPost = new()
             {
                 UserId = postData.UserId,
-                Body = postData.body,
-                PostType = postData.postType,
+                Body = postData.Body,
+                PostType = postData.PostType,
                 DatePublished = DateTime.Now
             };
 
-            switch (postData.postType)
+            var path = await fileService.UploadFileAsync(new FileModel()
             {
-                case PostType.photo:
-                    var photoPath = await fileService.UploadFileAsync(new FileModel()
-                    {
-                        UserId = postData.UserId,
-                        FileBase64 = postData.FileBase64,
-                        Filename = postData.Filename,
-                        FileType = fileType.postPhoto
-                    });
-                    newPost.fileURI = photoPath;
-
-                break;
-                case PostType.video:
-                    var videoPath = await fileService.UploadFileAsync(new FileModel()
-                    {
-                        UserId = postData.UserId,
-                        FileBase64 = postData.FileBase64,
-                        Filename = postData.Filename,
-                        FileType = fileType.postVideo
-                    });
-                    newPost.fileURI = videoPath;
-
-                    break;
-
-            }
+                UserId = postData.UserId,
+                FileBase64 = postData.FileBase64,
+                Filename = postData.Filename,
+                FileType = (fileType)postData.PostType + 1
+            });
+            newPost.fileURI = path;
 
             await context.AddAsync(newPost);
             await context.SaveChangesAsync();
+
             return newPost;
         }
 
-
         public async Task<PostViewModel> FindPost(int id)
         {
-
             var postView = await context.Posts.Where(x => x.Id == id).Include(u => u.User).Include(u=>u.Likes).Select(x => new PostViewModel
             {
                 Body = x.Body,
                 Id = x.Id,
                 UserId = x.UserId,
-                fileURI = x.fileURI,
+                FileURI = x.fileURI,
                 Likes = x.Likes.Sum(v => v.Liked ? 1 : -1),
                 Nickname = x.User!.Nickname,
                 PostType = x.PostType
@@ -82,13 +63,12 @@ namespace GamersApp.Services.PostServices
                 Body = x.Body,
                 Id = x.Id,
                 UserId = x.UserId,
-                fileURI = x.fileURI,
+                FileURI = x.fileURI,
                 Likes = x.Likes.Sum(v => v.Liked ? 1 : -1),
                 Nickname = x.User!.Nickname,
                 PostType = x.PostType
             }).ToListAsync();
         }
-
 
         public async Task ChangeLikes(int id, bool value, int userId)
         {
@@ -111,7 +91,6 @@ namespace GamersApp.Services.PostServices
             post!.Likes!.Add(newLike);
             context.Posts.Update(post);
             await context.SaveChangesAsync();
-
         }
 
         public async Task RemoveLike(int likeId)
@@ -122,10 +101,5 @@ namespace GamersApp.Services.PostServices
 
             await context.SaveChangesAsync();
         }
-
-
-
-
-
     }
 }
