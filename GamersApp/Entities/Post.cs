@@ -7,7 +7,7 @@ namespace GamersApp.Entities
         [Key]
         public int Id { get; set; }
         public string Body { get; set; } = string.Empty;
-        public string? fileURI { get; set; }
+        public string? FileURI { get; set; }
         public PostType PostType { get; set; } = PostType.none;
         public DateTime? DatePublished { get; set; }
         public DateTime? DateEdited { get; set; }

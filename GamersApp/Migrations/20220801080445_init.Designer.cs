@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamersApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220729133734_posts")]
-    partial class posts
+    [Migration("20220801080445_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,17 +61,11 @@ namespace GamersApp.Migrations
                     b.Property<int?>("Follower")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("Followed");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("Follower");
 
                     b.ToTable("FriendRequests");
                 });
@@ -111,6 +105,9 @@ namespace GamersApp.Migrations
                     b.Property<DateTime?>("DatePublished")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FileURI")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
@@ -119,9 +116,6 @@ namespace GamersApp.Migrations
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<string>("fileURI")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -163,9 +157,6 @@ namespace GamersApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
@@ -242,7 +233,7 @@ namespace GamersApp.Migrations
                     b.Property<DateTime?>("ResetTokenExpires")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("role")
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -297,13 +288,18 @@ namespace GamersApp.Migrations
 
             modelBuilder.Entity("GamersApp.Entities.FriendRequest", b =>
                 {
-                    b.HasOne("GamersApp.Entities.User", null)
-                        .WithMany("FriendRequestsMe")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("GamersApp.Entities.User", null)
+                    b.HasOne("GamersApp.Entities.User", "FollowedUser")
                         .WithMany("FriendRequestsThem")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("Followed");
+
+                    b.HasOne("GamersApp.Entities.User", "FollowerUser")
+                        .WithMany("FriendRequestsMe")
+                        .HasForeignKey("Follower")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("FollowedUser");
+
+                    b.Navigation("FollowerUser");
                 });
 
             modelBuilder.Entity("GamersApp.Entities.Post", b =>

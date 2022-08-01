@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GamersApp.Migrations
 {
-    public partial class posts : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace GamersApp.Migrations
                     Nickname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    role = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false),
                     PasswordResetToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ResetTokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FailedPasswordAttempts = table.Column<int>(type: "int", nullable: false)
@@ -48,23 +48,22 @@ namespace GamersApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Follower = table.Column<int>(type: "int", nullable: true),
-                    Followed = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    UserId1 = table.Column<int>(type: "int", nullable: true)
+                    Followed = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FriendRequests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FriendRequests_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_FriendRequests_Users_Followed",
+                        column: x => x.Followed,
                         principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_FriendRequests_Users_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_FriendRequests_Users_Follower",
+                        column: x => x.Follower,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,7 +99,7 @@ namespace GamersApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    fileURI = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileURI = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostType = table.Column<int>(type: "int", nullable: false),
                     DatePublished = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateEdited = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -128,7 +127,6 @@ namespace GamersApp.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Twitter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Instagram = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -203,14 +201,14 @@ namespace GamersApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_FriendRequests_UserId",
+                name: "IX_FriendRequests_Followed",
                 table: "FriendRequests",
-                column: "UserId");
+                column: "Followed");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FriendRequests_UserId1",
+                name: "IX_FriendRequests_Follower",
                 table: "FriendRequests",
-                column: "UserId1");
+                column: "Follower");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Friends_UserID1",

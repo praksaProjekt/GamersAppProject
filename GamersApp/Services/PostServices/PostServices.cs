@@ -1,4 +1,5 @@
-﻿using GamersApp.DTO;
+﻿using AutoMapper;
+using GamersApp.DTO;
 using GamersApp.Entities;
 using GamersApp.Services.FileServices;
 
@@ -8,11 +9,13 @@ namespace GamersApp.Services.PostServices
     {
         private readonly DataContext context;
         private readonly IFileServices fileService;
+        private readonly IMapper mapper;
 
-        public PostServices(DataContext context, IFileServices fileService)
+        public PostServices(DataContext context, IFileServices fileService, IMapper mapper)
         {
             this.context = context;
             this.fileService = fileService;
+            this.mapper = mapper;
         }
 
         public async Task<Post> AddPost(PostModel postData)
@@ -32,7 +35,7 @@ namespace GamersApp.Services.PostServices
                 Filename = postData.Filename,
                 FileType = (fileType)postData.PostType + 1
             });
-            newPost.fileURI = path;
+            newPost.FileURI = path;
 
             await context.AddAsync(newPost);
             await context.SaveChangesAsync();
@@ -42,32 +45,26 @@ namespace GamersApp.Services.PostServices
 
         public async Task<PostViewModel> FindPost(int id)
         {
-            var postView = await context.Posts.Where(x => x.Id == id).Include(u => u.User).Include(u=>u.Likes).Select(x => new PostViewModel
-            {
-                Body = x.Body,
-                Id = x.Id,
-                UserId = x.UserId,
-                FileURI = x.fileURI,
-                Likes = x.Likes.Sum(v => v.Liked ? 1 : -1),
-                Nickname = x.User!.Nickname,
-                PostType = x.PostType
-            }).FirstOrDefaultAsync(); ;
-
-            return postView!;
+            return await mapper.ProjectTo<PostViewModel>(
+                from post in context.Posts
+                where post.Id == id
+                orderby post.Id descending
+                select post, new
+                {
+                    CurrentUserId = 1
+                }).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<PostViewModel>> GetUserPosts(int userID)
         {
-            return await context.Posts.Where(x => x.UserId == userID).Include(u => u.User).Include(u => u.Likes).Select(x => new PostViewModel
-            {
-                Body = x.Body,
-                Id = x.Id,
-                UserId = x.UserId,
-                FileURI = x.fileURI,
-                Likes = x.Likes.Sum(v => v.Liked ? 1 : -1),
-                Nickname = x.User!.Nickname,
-                PostType = x.PostType
-            }).ToListAsync();
+            return await mapper.ProjectTo<PostViewModel>(
+                from post in context.Posts 
+                where post.UserId == userID 
+                orderby post.Id descending 
+                select post, new
+                {
+                    CurrentUserId = userID
+                }).ToListAsync();
         }
 
         public async Task ChangeLikes(int id, bool value, int userId)

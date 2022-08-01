@@ -30,8 +30,7 @@
 
 
   <ItemGroup>
-    <Folder Include="AutoMapper\" />
-    <Folder Include="Migrations\" />
+    <Folder Include="ActionFilters\" />
     <Folder Include="Services\ProfileServices\" />
     <Folder Include="wwwroot\content\" />
   </ItemGroup>
