@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GamersApp.Data;
-using GamersApp.Entities;
+﻿using GamersApp.DTO;
 using GamersApp.Services.PostServices;
-using GamersApp.DTO;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GamersApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostsController : ControllerBase
+    public class PostsController : BaseController
     {
         private readonly IPostServices postService;
 
@@ -22,6 +14,7 @@ namespace GamersApp.Controllers
         {
             this.postService = postService;
         }
+
         [HttpPost("addpost")]
         public async Task<IActionResult> AddPost(PostModel postData)
         {
@@ -31,7 +24,6 @@ namespace GamersApp.Controllers
                 return Ok(newPost);
 
             return BadRequest();
-
         }
 
         [HttpGet("findpost")]
@@ -43,7 +35,6 @@ namespace GamersApp.Controllers
                 return Ok(post);
 
             return BadRequest();
-
         }
 
         [HttpGet("getuserposts")]
@@ -55,7 +46,6 @@ namespace GamersApp.Controllers
                 return Ok(post);
 
             return BadRequest();
-
         }
 
         [HttpPost("changeLikes")]
@@ -71,9 +61,5 @@ namespace GamersApp.Controllers
             await postService.RemoveLike(likeId);
             return Ok();
         }
-
-
-
-
     }
 }
